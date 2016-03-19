@@ -11,8 +11,29 @@ public class StampDispenser
      *     machine should have.  Should be sorted in descending order and 
      *     contain at least a 1.
      */
+    private int[] stampDenominations;
+
     public StampDispenser(int[] stampDenominations)
     {
+    	if(isDescending(stampDenominations) && 
+    		stampDenominations[stampDenominations.length-1] == 1)
+    	{
+    		this.stampDenominations = stampDenominations;
+    	} 
+    }
+
+    // checks the array to make sure it was in descending order
+    private boolean isDescending(int[] stampDenominations) 
+    {
+    	if(stampDenominations.length > 1) 
+    	{
+    		for(int i = 0; i < stampDenominations.length - 1; i++) 
+    		{
+    			if(stampDenominations[i]  < stampDenominations[i+1]) 
+    				return false;
+    		}
+    	}
+    	return true;
     }
  
     /**
@@ -23,13 +44,28 @@ public class StampDispenser
      */
     public int calcMinNumStampsToFillRequest(int request)
     {  
-        return 0;
+    	int numStamps = 0;
+
+    	for(int i = 0; i < stampDenominations.length; i++)
+    	{
+    		numStamps += request / stampDenominations[i];
+    		request = request % stampDenominations[i];
+
+    		if(request == 0)
+    			break;
+    	}
+    	System.out.println(numStamps);
+        return numStamps;
     }
     
     public static void main(String[] args)
     {
+        // int[] denominations = { 1 };
         int[] denominations = { 90, 30, 24, 10, 6, 2, 1 };
+        // int[] denominations = { 90, 30, 24, 10, 6, 2, 1 };
         StampDispenser stampDispenser = new StampDispenser(denominations);
+        // System.out.println(stampDispenser.calcMinNumStampsToFillRequest(18) == 3);
         assert stampDispenser.calcMinNumStampsToFillRequest(18) == 3;
+
     }
 }
