@@ -48,24 +48,20 @@ public class StampDispenser
 
     	for(int i = 0; i < stampDenominations.length; i++)
     	{
-    		numStamps += request / stampDenominations[i];
-    		request = request % stampDenominations[i];
+    		numStamps += request / stampDenominations[i];		// first finds the number of stamps that can be dispensed with current denomination
+    		request = request % stampDenominations[i];			// then updates the request to reflect remainder
 
     		if(request == 0)
     			break;
     	}
-    	System.out.println(numStamps);
+
         return numStamps;
     }
     
     public static void main(String[] args)
     {
-        // int[] denominations = { 1 };
         int[] denominations = { 90, 30, 24, 10, 6, 2, 1 };
-        // int[] denominations = { 90, 30, 24, 10, 6, 2, 1 };
         StampDispenser stampDispenser = new StampDispenser(denominations);
-        // System.out.println(stampDispenser.calcMinNumStampsToFillRequest(18) == 3);
         assert stampDispenser.calcMinNumStampsToFillRequest(18) == 3;
-
     }
 }
