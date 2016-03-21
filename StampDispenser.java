@@ -14,26 +14,20 @@ public class StampDispenser
     private int[] stampDenominations;
 
     public StampDispenser(int[] stampDenominations)
-    {
-    	if(isDescending(stampDenominations) && 
-    		stampDenominations[stampDenominations.length-1] == 1)
+    { 
+    	if(!isDescending(stampDenominations))
+    	{
+    		throw new IllegalArgumentException("Denominations array is not in descending order (i.e. largest to smallest)");
+    	}
+    	else if(stampDenominations[stampDenominations.length-1] != 1)
+    	{
+    		throw new IllegalArgumentException("Denominations array does not contain 1");
+    	}  
+    	else 
     	{
     		this.stampDenominations = stampDenominations;
     	} 
-    }
-
-    // checks the array to make sure it was in descending order
-    private boolean isDescending(int[] stampDenominations) 
-    {
-    	if(stampDenominations.length > 1) 
-    	{
-    		for(int i = 0; i < stampDenominations.length - 1; i++) 
-    		{
-    			if(stampDenominations[i]  < stampDenominations[i+1]) 
-    				return false;
-    		}
-    	}
-    	return true;
+    	
     }
  
     /**
@@ -63,5 +57,20 @@ public class StampDispenser
         int[] denominations = { 90, 30, 24, 10, 6, 2, 1 };
         StampDispenser stampDispenser = new StampDispenser(denominations);
         assert stampDispenser.calcMinNumStampsToFillRequest(18) == 3;
+    }
+    
+
+    // checks the array to make sure it is in descending order
+    private boolean isDescending(int[] stampDenominations) 
+    {
+    	if(stampDenominations.length > 1) 
+    	{
+    		for(int i = 0; i < stampDenominations.length - 1; i++) 
+    		{
+    			if(stampDenominations[i]  < stampDenominations[i+1]) 
+    				return false;
+    		}
+    	}
+    	return true;
     }
 }
